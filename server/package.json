@@ -1,0 +1,30 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "rd /s /q dist & tsc",
+    "start": "nodemon --watch src -e ts --exec ts-node src/index.ts"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.2",
+    "@types/multer": "^1.4.2",
+    "@types/node": "^13.7.7",
+    "@typescript-eslint/eslint-plugin": "^2.21.0",
+    "@typescript-eslint/parser": "^2.21.0",
+    "eslint": "^6.8.0",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@types/mongodb": "^3.3.16",
+    "@types/mongoose": "^5.7.3",
+    "class-transformer": "^0.2.3",
+    "class-validator": "^0.11.0",
+    "express": "^4.17.1",
+    "import": "^0.0.6",
+    "mongoose": "^5.9.2",
+    "multer": "^1.4.2",
+    "reflect-metadata": "^0.1.13"
+  }
+}
