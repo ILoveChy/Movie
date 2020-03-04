@@ -38,6 +38,8 @@ export class ResHelper {
    * @param res 
    */
   public static sendPageData<T>(result: ISearchResult<T>, res: Response) {
+    console.log(result.data);
+
     if (result.errors.length > 0) {
       //有错误
       this.sendError(result.errors, res)

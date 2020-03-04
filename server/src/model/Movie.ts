@@ -1,5 +1,5 @@
-import { IsNotEmpty, ArrayMinSize, IsInt, Min, Max, IsArray, validate } from 'class-validator'
-import { Type, plainToClass } from 'class-transformer'
+import { IsNotEmpty, ArrayMinSize, IsInt, Min, Max, IsArray } from 'class-validator'
+import { Type } from 'class-transformer'
 import { BaseModel } from './BaseModel'
 export class Movie extends BaseModel {
 
