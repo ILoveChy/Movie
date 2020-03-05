@@ -48,7 +48,7 @@ export class ResHelper {
       res.send({
         err: null,
         data: result.data,
-        total: result.count
+        count: result.count
       })
     }
   }

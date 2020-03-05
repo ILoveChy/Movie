@@ -23,7 +23,7 @@ export class MovieService {
     const { data } = await Axios.put(`/api/movie/${id}`, movie)
     return data
   }
-  public static async delete(id: string, movie: IMovie): Promise<IResData<true> | IResError> {
+  public static async delete(id: string): Promise<IResData<true> | IResError> {
     const { data } = await Axios.delete(`/api/movie/${id}`)
     return data
   }
