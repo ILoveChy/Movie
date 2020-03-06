@@ -1,6 +1,6 @@
 import { IMovie } from "../../services/MovieServices";
 import { ISearchCondition } from "../../services/CommonTypes";
-import { MovieActions, SaveMovieActionType, SetConditionActionType, DeleteMoviesActionType, SetLoadingActionType } from "../actions/MovieAction";
+import { MovieActions, SaveMovieActionType, SetConditionActionType, DeleteMoviesActionType, SetLoadingActionType, ChangeSwitchActionType } from "../actions/MovieAction";
 import { Reducer } from "react";
 /**
  * 描述电影列表的状态类型
@@ -75,13 +75,32 @@ const setMovieLoading: MovieReducer<SetLoadingActionType> = (state, action) => {
 const deleteMovie: MovieReducer<DeleteMoviesActionType> = (state, action) => {
   return {
     ...state,
-    data: state.data.filter(m => m.id !== action.payload),
+    data: state.data.filter(m => m._id !== action.payload),
     count: state.count - 1,
     countPage: Math.ceil((state.count - 1) / state.condition.limit)
   }
 }
-
-
+const changeSwitch: MovieReducer<ChangeSwitchActionType> = (state, action) => {
+  // action.payload.newVal
+  //根据id找到对象
+  const movie = state.data.find(d => d._id === action.payload.id)
+  if (!movie) {
+    return state
+  }
+  const newMovie = { ...movie };
+  newMovie[action.payload.type] = action.payload.newVal
+  const newData = state.data.map(d => {
+    if (d._id === action.payload.id) {
+      return newMovie
+    } else {
+      return d
+    }
+  })
+  return {
+    ...state,
+    data: newData
+  }
+}
 export default function (state: IMovieState = defaultState, action: MovieActions) {
   switch (action.type) {
     case "movie_save":
@@ -92,6 +111,8 @@ export default function (state: IMovieState = defaultState, action: MovieActions
       return setCondition(state, action)
     case "movie_setLoading":
       return setMovieLoading(state, action)
+    case "movie_switch":
+      return changeSwitch(state, action)
     default:
       return state;
   }

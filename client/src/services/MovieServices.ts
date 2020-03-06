@@ -3,7 +3,7 @@ import { IResData, IResError, ISearchCondition, IResPageData } from './CommonTyp
 
 
 export interface IMovie {
-  id?: string
+  _id?: string
   name: string
   types: string[]
   areas: string[]
@@ -19,7 +19,7 @@ export class MovieService {
     const { data } = await Axios.post('/api/movie', movie)
     return data
   }
-  public static async update(id: string, movie: IMovie): Promise<IResData<true> | IResError> {
+  public static async update(id: string, movie: Partial<IMovie>): Promise<IResData<true> | IResError> {
     const { data } = await Axios.put(`/api/movie/${id}`, movie)
     return data
   }

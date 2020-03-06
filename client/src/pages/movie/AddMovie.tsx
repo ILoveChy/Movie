@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-export default function AddMovie() {
-  return (
-    <div>
-      <h1>添加电影页</h1>
-    </div>
-  )
+export default class AddMovie extends Component {
+  render() {
+    return (
+      <div>
+        添加电影
+      </div>
+    )
+  }
 }
+

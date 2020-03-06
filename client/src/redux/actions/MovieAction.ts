@@ -1,6 +1,6 @@
 import { IAction } from './ActionTypes'
 import { IMovie, MovieService } from '../../services/MovieServices'
-import { ISearchCondition } from '../../services/CommonTypes'
+import { ISearchCondition, SwitchType } from '../../services/CommonTypes'
 import { ThunkAction } from 'redux-thunk'
 import { IRootState } from '../reducers/RootReducer'
 export type SaveMovieActionType = IAction<"movie_save", {
@@ -14,7 +14,21 @@ export type SetConditionActionType = IAction<"movie_setCondition", ISearchCondit
 
 export type DeleteMoviesActionType = IAction<"movie_delete", string>
 
-
+export type ChangeSwitchActionType = IAction<"movie_switch", {
+  type: SwitchType,
+  newVal: boolean,
+  id: string
+}>
+function changeSwitchAction(type: SwitchType, newVal: boolean, id: string): ChangeSwitchActionType {
+  return {
+    type: "movie_switch",
+    payload: {
+      type,
+      newVal,
+      id
+    }
+  }
+}
 function saveMoviesAction(movies: IMovie[], count: number): SaveMovieActionType {
   return {
     type: "movie_save",
@@ -49,7 +63,7 @@ function deleteMoviesAction(id: string): DeleteMoviesActionType {
 }
 
 
-export type MovieActions = SaveMovieActionType | SetLoadingActionType | SetConditionActionType | DeleteMoviesActionType
+export type MovieActions = SaveMovieActionType | SetLoadingActionType | SetConditionActionType | DeleteMoviesActionType | ChangeSwitchActionType
 
 //根据条件从服务器获取电影数据
 function fetchMovies(condition: ISearchCondition): MovieThunk {
@@ -77,12 +91,23 @@ function deleteMovie(id: string): MovieThunk {
     dispatch(setLoadingAction(false));
   }
 }
+function ChangeSwitch(type: SwitchType, newVal: boolean, id: string): MovieThunk {
+  return async dispatch => {
+    dispatch(changeSwitchAction(type, newVal, id));
+    await MovieService.update(id, {
+      [type]: newVal
+    })
+  }
+}
+
 
 export default {
   saveMoviesAction,
   setLoadingAction,
   setConditionAction,
   deleteMoviesAction,
+  changeSwitchAction,
   fetchMovies,
-  deleteMovie
+  deleteMovie,
+  ChangeSwitch
 }
