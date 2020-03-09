@@ -1,24 +1,39 @@
-import React, { useState } from 'react'
-import { RouteComponentProps, useParams, useRouteMatch, useHistory, useLocation } from 'react-router';
-import { Button } from 'antd';
+import React, { useState, useEffect } from 'react'
+import { RouteComponentProps, useParams } from 'react-router';
+import MovieForm from '../../components/MovieForm';
+import { MovieService, IMovie } from '../../services/MovieServices';
 interface IParams {
   id: string
 }
-export default function EditMovie(props: RouteComponentProps<IParams>) {
 
+const EditMovie = (props: RouteComponentProps<IParams>) => {
 
-  const [movieId, setMovieId] = useState(useParams<IParams>().id);
-  console.log(useRouteMatch(), useHistory(), useLocation());
+  const [movie, setMovie] = useState<IMovie>(undefined);
+  const [movieId] = useState(useParams<IParams>().id);
+  useEffect(
+    () => {
+      const result = MovieService.getMovieById(movieId)
+      result.then(res => {
+        setMovie(res.data);
+      })
+    }, []);
 
   return (
     <div>
-      <h1>修改电影页</h1>
-      <p>电影id:{movieId}</p>
-      <Button type="primary" onClick={(e) => {
-        setMovieId(movieId + e.clientX)
-      }}>点我</Button>
+      <MovieForm
+        onFinish={async movie => {
+          const res = await MovieService.update(movieId, movie)
+          if (res.data) {
+            return "";
+          } else {
+            return res.err
+          }
+        }}
+        movie={movie}
+      />
     </div>
   )
 }
 
+export default EditMovie
 

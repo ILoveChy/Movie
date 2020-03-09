@@ -27,7 +27,7 @@ export class MovieService {
     const { data } = await Axios.delete(`/api/movie/${id}`)
     return data
   }
-  public static async getMovieById(id: string): Promise<IMovie | null> {
+  public static async getMovieById(id: string): Promise<IResData<IMovie> | null> {
     const { data } = await (await Axios.get(`/api/movie/${id}`))
     return data
   }

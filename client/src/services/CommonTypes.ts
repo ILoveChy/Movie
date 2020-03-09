@@ -1,18 +1,18 @@
 export interface IResError {
 
-  errors: string[];
+  err: string[];
   data: null;
 }
 
 export interface IResData<T> {
 
-  errors: "";
-  data: T[];
+  err: "";
+  data: T;
 }
 
 export interface IResPageData<T> {
 
-  errors: ""
+  err: ""
   count: number;//数据总数
   data: T[];//查询的数据
 }

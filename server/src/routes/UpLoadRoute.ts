@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
     cb(null, `${time}${extname}`)
   }
 })
-const allowdExtensions = [".jpg", "png", "gif", "bmp", "jpeg", "tiff"]
+const allowdExtensions = [".jpg", ".png", ".gif", ".bmp", ".jpeg", ".tiff"]
 const upload = multer({
   storage,
   limits: {

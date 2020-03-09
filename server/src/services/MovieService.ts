@@ -9,9 +9,9 @@ export class MovieService {
     //1. 转换类型
     movie = Movie.transform(movie)
     //2. 数据验证
-    const errors = await movie.validateThis()
-    if (errors.length > 0) {
-      return errors
+    const err = await movie.validateThis()
+    if (err.length > 0) {
+      return err
     }
     //3. 添加到数据库
     const result = await MovieModel.create(movie)
@@ -19,13 +19,13 @@ export class MovieService {
   }
   public static async update(id: string, movie: Movie): Promise<string[]> {
     const movieObj = Movie.transform(movie)
-    const errors = await movieObj.validateThis(true)
-    if (errors.length > 0) {
-      return errors
+    const err = await movieObj.validateThis(true)
+    if (err.length > 0) {
+      return err
     }
     // 修改数据库
     await MovieModel.updateOne({ _id: id }, movie);
-    return errors;
+    return err;
   }
   public static async delete(id: string) {
     await MovieModel.deleteOne({ _id: id })

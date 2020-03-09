@@ -1,12 +1,20 @@
-import React, { Component } from 'react'
+import React from 'react'
+import MovieForm from '../../components/MovieForm'
+import { MovieService } from '../../services/MovieServices'
 
-export default class AddMovie extends Component {
-  render() {
-    return (
-      <div>
-        添加电影
-      </div>
-    )
-  }
+
+
+export default function AddMovie() {
+  return (
+    <div>
+      <MovieForm onFinish={async movie => {
+        const res = await MovieService.add(movie)
+        if (res.data) {
+          return "";
+        } else {
+          return res.err
+        }
+      }} />
+    </div>
+  )
 }
-
