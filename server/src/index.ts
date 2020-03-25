@@ -11,8 +11,9 @@ const app = Express();
 
 app.use(history())
 // 设置静态文件路径
-app.use('/upload', Express.static("public/upload"))
 app.use('/', Express.static("public/build"))
+app.use('/upload', Express.static("public/upload"))
+
 
 //配置中间件,用于解析请求消息体中的json数据
 app.use(Express.json());
